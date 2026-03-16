@@ -3,11 +3,12 @@ package pt.unl.fct.iadi.novaevents.service
 import org.springframework.stereotype.Service
 import pt.unl.fct.iadi.novaevents.model.Club
 import pt.unl.fct.iadi.novaevents.model.Event
+import java.time.LocalDate
 
 @Service
 class NovaeventsService {
 
-    val clubs = listOf<Club>(
+    private val clubs = listOf<Club>(
         Club(
             1,
             "Chess Club",
@@ -40,7 +41,7 @@ class NovaeventsService {
         )
     )
 
-    val clubMap = clubs.associateBy { it.id }
+    private val clubMap = clubs.associateBy { it.id }
     private val events: MutableList<Event> = mutableListOf()
 
     fun listAllClubs(): List<Club> {
@@ -53,5 +54,22 @@ class NovaeventsService {
 
     fun getEventsForClub(clubId: Long): List<Event> {
         return events.filter { it.clubId == clubId }
+    }
+
+    fun filterEvents(
+        type: Event.EventType?,
+        clubId: Long?,
+        from: LocalDate?,
+        to: LocalDate?
+    ): List<Event> {
+
+        return events.filter { event ->
+
+            (type == null || event.type == type) &&
+                    (clubId == null || event.clubId == clubId) &&
+                    (from == null || !event.date.isBefore(from)) &&
+                    (to == null || !event.date.isAfter(to))
+
+        }
     }
 }

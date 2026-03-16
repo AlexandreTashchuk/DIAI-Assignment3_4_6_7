@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Events</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="fragments/layout :: navbar"></div>
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">All Events</h1>
+
+    <!-- FILTERS -->
+    <div class="card mb-4">
+        <div class="card-header">
+            Filter Events
+        </div>
+
+        <div class="card-body">
+
+            <form method="get" th:action="@{/events}">
+
+                <div class="row g-3">
+
+                    <!-- EVENT TYPE -->
+                    <div class="col-md-3">
+                        <label class="form-label">Event Type</label>
+                        <select name="type" class="form-select">
+
+                            <option value="">All types</option>
+
+                            <option th:each="t : ${types}"
+                                    th:value="${t}"
+                                    th:text="${t}">
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <!-- CLUB -->
+                    <div class="col-md-3">
+                        <label class="form-label">Club</label>
+
+                        <select name="clubId" class="form-select">
+
+                            <option value="">All clubs</option>
+
+                            <option th:each="club : ${clubs}"
+                                    th:value="${club.id}"
+                                    th:text="${club.name}">
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <!-- FROM -->
+                    <div class="col-md-2">
+                        <label class="form-label">From</label>
+                        <input type="date" name="from" class="form-control">
+                    </div>
+
+                    <!-- TO -->
+                    <div class="col-md-2">
+                        <label class="form-label">To</label>
+                        <input type="date" name="to" class="form-control">
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="col-md-2 d-flex align-items-end">
+
+                        <button class="btn btn-primary me-2">
+                            Filter
+                        </button>
+
+                        <a href="/events" class="btn btn-secondary">
+                            Clear
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- EVENTS TABLE -->
+    <table class="table table-striped">
+
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Club</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="event : ${events}">
+
+            <td>
+                <a th:href="@{/events/{id}(id=${event.id})}"
+                   th:text="${event.name}">
+                </a>
+            </td>
+
+            <td th:text="${event.club.name}"></td>
+
+            <td th:text="${event.date}"></td>
+
+            <td>
+                <span class="badge bg-secondary"
+                      th:text="${event.type}">
+                </span>
+            </td>
+
+            <td th:text="${event.location}"></td>
+
+            <td>
+
+                <a th:href="@{/events/{id}/edit(id=${event.id})}"
+                   class="btn btn-sm btn-outline-primary">
+                    Edit
+                </a>
+
+                <a th:href="@{/events/{id}/delete(id=${event.id})}"
+                   class="btn btn-sm btn-outline-danger">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
