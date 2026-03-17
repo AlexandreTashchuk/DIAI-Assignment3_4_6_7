@@ -169,8 +169,6 @@ class NovaeventsService {
         val club = clubs.find { it.id == clubId }
             ?: throw ClubNotFoundException(clubId)
 
-        //TODO: Event names should be different across all clubs
-        // ✅ across ALL clubs
         if (events.any { it.name.equals(form.name, ignoreCase = true) }) {
             throw EventAlreadyExistsException("Event '${form.name}' already exists")
         }
