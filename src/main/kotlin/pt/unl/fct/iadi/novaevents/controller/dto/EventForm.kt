@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 data class EventForm(
 
-    @field:NotBlank(message = "Event name is required")
+    @field:NotBlank(message = "Name is required")
     val name: String? = null,
 
     @field:NotNull(message = "Event date is required")
