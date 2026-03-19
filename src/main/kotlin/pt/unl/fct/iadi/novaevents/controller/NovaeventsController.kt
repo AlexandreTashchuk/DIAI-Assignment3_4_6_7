@@ -102,8 +102,6 @@ class NovaeventsController (val service: NovaeventsService) : NovaeventsAPI {
             "redirect:/clubs/${clubId}/events/${event.id}"
         } catch (ex: EventAlreadyExistsException) {
 
-            //TODO: Not sure
-            // Inline validation error (IMPORTANT)
             bindingResult.rejectValue("name", "error.name", ex.message ?: "Duplicate event")
 
             model.addAttribute("types", Event.EventType.values())
