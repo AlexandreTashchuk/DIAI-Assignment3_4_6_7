@@ -10,7 +10,7 @@ data class EventForm(
     @field:NotBlank(message = "Name is required")
     val name: String? = null,
 
-    @field:NotNull(message = "Event date is required")
+    @field:NotNull(message = "Date is required")
     val date: LocalDate? = null,
 
     @field:NotNull(message = "Event type is required")
