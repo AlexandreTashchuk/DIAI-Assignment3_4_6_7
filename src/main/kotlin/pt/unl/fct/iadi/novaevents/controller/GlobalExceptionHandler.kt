@@ -20,7 +20,6 @@ class GlobalExceptionHandler {
         return "error/404"
     }
 
-    //TODO: Response Status + 400.html page
     @ExceptionHandler(EventAlreadyExistsException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleDuplicateEvent(ex: EventAlreadyExistsException, model: Model): String {
@@ -35,10 +34,10 @@ class GlobalExceptionHandler {
         return "error/404"
     }
 
-    @ExceptionHandler(ClubDoesNotHaveEventException::class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    fun handleClubDoesNotHaveEvent(ex: ClubDoesNotHaveEventException, model: Model): String {
-        model.addAttribute("message", ex.message)
-        return "error/405"
-    }
+//    @ExceptionHandler(ClubDoesNotHaveEventException::class)
+//    @ResponseStatus(HttpStatus.CONFLICT)
+//    fun handleClubDoesNotHaveEvent(ex: ClubDoesNotHaveEventException, model: Model): String {
+//        model.addAttribute("message", ex.message)
+//        return "error/405"
+//    }
 }
