@@ -20,12 +20,12 @@ class GlobalExceptionHandler {
         return "error/404"
     }
 
-    @ExceptionHandler(EventAlreadyExistsException::class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleDuplicateEvent(ex: EventAlreadyExistsException, model: Model): String {
-        model.addAttribute("message", ex.message)
-        return "error/400"
-    }
+//    @ExceptionHandler(EventAlreadyExistsException::class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    fun handleDuplicateEvent(ex: EventAlreadyExistsException, model: Model): String {
+//        model.addAttribute("message", ex.message)
+//        return "error/400"
+//    }
 
     @ExceptionHandler(EventNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

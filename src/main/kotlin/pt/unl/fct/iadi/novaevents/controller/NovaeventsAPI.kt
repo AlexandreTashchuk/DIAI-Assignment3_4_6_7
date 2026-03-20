@@ -76,7 +76,7 @@ interface NovaeventsAPI {
 
     @RequestMapping(
         value = ["/clubs/{clubId}/events/{eventId}"],
-        method = [RequestMethod.POST]
+        method = [RequestMethod.PUT]
     )
     fun updateEvent(
         @PathVariable clubId: Long,
