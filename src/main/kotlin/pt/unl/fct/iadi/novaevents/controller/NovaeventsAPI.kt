@@ -97,7 +97,7 @@ interface NovaeventsAPI {
     ): String
 
     @RequestMapping(
-        value = ["/clubs/{clubId}/events/{eventId}/delete"],
+        value = ["/clubs/{clubId}/events/{eventId}"],
         method = [RequestMethod.DELETE]
     )
     fun deleteEvent(
