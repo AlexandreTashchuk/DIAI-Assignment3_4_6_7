@@ -151,7 +151,7 @@ class NovaeventsController (val service: NovaeventsService) : NovaeventsAPI {
         service.updateEventById(eventId, clubId, eventForm)
         return try {
             val event = service.updateEventById(eventId, clubId, eventForm)
-            "redirect:/clubs/${clubId}/events/${event.id}"
+            "redirect:/clubs/${clubId}"
         } catch (ex: EventAlreadyExistsException) {
 
             // bindingResult.rejectValue("name", "error.name", ex.message ?: "Duplicate event")
