@@ -3,6 +3,7 @@ package pt.unl.fct.iadi.novaevents.controller
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event
 import pt.unl.fct.iadi.novaevents.controller.dto.EventForm
 import pt.unl.fct.iadi.novaevents.model.Event
 import pt.unl.fct.iadi.novaevents.service.EventAlreadyExistsException
@@ -149,8 +150,8 @@ class NovaeventsController (val service: NovaeventsService) : NovaeventsAPI {
         }
 
         return try {
-            service.updateEventById(eventId, clubId, eventForm)
-            "redirect:/clubs/${clubId}"
+            val event = service.updateEventById(eventId, clubId, eventForm)
+            "redirect:/clubs/${clubId}/events/${event.id}"
         } catch (ex: EventAlreadyExistsException) {
 
             // bindingResult.rejectValue("name", "error.name", ex.message ?: "Duplicate event")
