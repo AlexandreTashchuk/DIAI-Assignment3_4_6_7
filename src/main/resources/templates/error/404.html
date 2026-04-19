@@ -1,3 +1,17 @@
-<h1>404 - Resource Not Found</h1>
-<p th:text="${message}"></p>
-<a href="/clubs">Back to clubs</a>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Not Found')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="container mt-5">
+	<div class="alert alert-secondary">
+		<h2 class="mb-2">404 - Resource Not Found</h2>
+		<p class="mb-2">The page or resource you requested does not exist.</p>
+		<p class="mb-0" th:if="${message}" th:text="${message}"></p>
+	</div>
+
+	<a class="btn btn-primary" th:href="@{/clubs}">Back to clubs</a>
+</div>
+</body>
+</html>

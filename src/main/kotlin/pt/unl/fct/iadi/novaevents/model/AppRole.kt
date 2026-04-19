@@ -13,7 +13,6 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "app_roles")
 class AppRole(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

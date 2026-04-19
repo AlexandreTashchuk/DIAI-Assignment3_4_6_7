@@ -1,3 +1,17 @@
-<h1>405 - Conflict</h1>
-<p th:text="${message}"></p>
-<a href="/clubs">Back to clubs</a>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Method Not Allowed')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="container mt-5">
+	<div class="alert alert-info">
+		<h2 class="mb-2">405 - Method Not Allowed</h2>
+		<p class="mb-2">This operation is not allowed for the requested resource.</p>
+		<p class="mb-0" th:if="${message}" th:text="${message}"></p>
+	</div>
+
+	<a class="btn btn-primary" th:href="@{/clubs}">Back to clubs</a>
+</div>
+</body>
+</html>

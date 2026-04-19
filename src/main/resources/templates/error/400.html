@@ -1,3 +1,17 @@
-<h1>400 - Bad Request</h1>
-<p th:text="${message}"></p>
-<a href="/clubs">Back to clubs</a>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Bad Request')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="container mt-5">
+	<div class="alert alert-warning">
+		<h2 class="mb-2">400 - Bad Request</h2>
+		<p class="mb-2">The request could not be processed.</p>
+		<p class="mb-0" th:if="${message}" th:text="${message}"></p>
+	</div>
+
+	<a class="btn btn-primary" th:href="@{/clubs}">Back to clubs</a>
+</div>
+</body>
+</html>

@@ -10,7 +10,7 @@
 
 <body>
 
-<div th:replace="fragments/layout :: navbar"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
 
 <div class="container mt-4">
 
@@ -111,15 +111,17 @@
         <tr th:each="event : ${events}">
 
             <td>
-                <a th:href="@{clubs/{clubId}/events/{id}(id=${event.id}, clubId=${event.clubId})}"
+                <a th:href="@{/clubs/{clubId}/events/{id}(id=${event.id}, clubId=${event.clubId})}"
                    th:text="${event.name}">
                 </a>
             </td>
 
             <td>
-                <a th:href="@{clubs/{clubId}(clubId=${event.clubId})}"
+                <a th:if="${clubMap[event.clubId] != null}"
+                   th:href="@{/clubs/{clubId}(clubId=${event.clubId})}"
                    th:text="${clubMap[event.clubId].name}">
                 </a>
+                <span th:unless="${clubMap[event.clubId] != null}" class="text-muted">Unknown club</span>
             </td>
 
             <td th:text="${event.date}"></td>

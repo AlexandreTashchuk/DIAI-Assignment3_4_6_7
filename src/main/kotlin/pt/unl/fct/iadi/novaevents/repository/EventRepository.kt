@@ -1,7 +1,9 @@
 package pt.unl.fct.iadi.novaevents.repository
 
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import pt.unl.fct.iadi.novaevents.model.Event
 import java.time.LocalDate
 
@@ -23,6 +25,13 @@ interface EventRepository : JpaRepository<Event, Long> {
 
     @Query("SELECT (COUNT(e) > 0) FROM Event e WHERE e.id = :eventId AND e.owner.username = :username")
     fun isOwner(eventId: Long, username: String): Boolean
+
+    @Modifying
+    @Query(
+        value = "UPDATE event SET owner_id = :ownerId WHERE owner_id IS NULL OR owner_id = 0",
+        nativeQuery = true
+    )
+    fun backfillMissingOwners(@Param("ownerId") ownerId: Long): Int
 
     // filtros no html, para o futuro, e melhor
     @Query("""

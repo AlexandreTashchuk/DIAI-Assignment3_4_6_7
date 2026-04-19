@@ -56,12 +56,13 @@ class SecurityConfig(
                 auth
                     .requestMatchers("/css/**", "/js/**", "/images/**", "/error/**").permitAll()
                     .requestMatchers("/login").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/clubs", "/clubs/*", "/events", "/clubs/*/events/*").permitAll()
+                    // Restrictive matchers must come before broad public matchers.
                     .requestMatchers(HttpMethod.GET, "/clubs/*/events/new", "/clubs/*/events/*/edit").hasAnyRole("EDITOR", "ADMIN")
                     .requestMatchers(HttpMethod.POST, "/clubs/*/events").hasAnyRole("EDITOR", "ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/clubs/*/events/*").hasAnyRole("EDITOR", "ADMIN")
                     .requestMatchers(HttpMethod.GET, "/clubs/*/events/*/delete").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/clubs/*/events/*").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/clubs", "/clubs/*", "/events", "/clubs/*/events/*").permitAll()
                     .anyRequest().authenticated()
             }
             .formLogin { form ->
@@ -86,6 +87,7 @@ class SecurityConfig(
             }
             .exceptionHandling { ex ->
                 ex.authenticationEntryPoint(LoginUrlAuthenticationEntryPoint("/login"))
+                ex.accessDeniedPage("/403")
             }
 
         return http.build()

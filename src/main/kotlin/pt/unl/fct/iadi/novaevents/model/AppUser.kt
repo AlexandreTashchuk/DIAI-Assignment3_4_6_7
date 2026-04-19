@@ -10,7 +10,6 @@ import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "app_users")
 class AppUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package pt.unl.fct.iadi.novaevents
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 import pt.unl.fct.iadi.novaevents.model.AppRole
 import pt.unl.fct.iadi.novaevents.model.AppRoleName
 import pt.unl.fct.iadi.novaevents.model.AppUser
@@ -21,10 +22,17 @@ class DataInitializer(
     private val passwordEncoder: PasswordEncoder
 ) : ApplicationRunner {
 
+    @Transactional
     override fun run(args: org.springframework.boot.ApplicationArguments?) {
         seedUserIfMissing("alice", "password123", AppRoleName.ROLE_EDITOR)
         seedUserIfMissing("bob", "password123", AppRoleName.ROLE_EDITOR)
         seedUserIfMissing("charlie", "password123", AppRoleName.ROLE_ADMIN)
+
+        val alice = appUserRepository.findByUsername("alice")
+            ?: throw IllegalStateException("Seed user alice is missing")
+
+        // One-time repair for databases created before owner FK migration.
+        eventRepository.backfillMissingOwners(alice.id)
 
         val clubs = if (clubRepository.count() == 0L) {
             clubRepository.saveAll(
@@ -41,8 +49,6 @@ class DataInitializer(
         }
 
         if (eventRepository.count() == 0L && clubs.size >= 5) {
-            val alice = appUserRepository.findByUsername("alice")
-                ?: throw IllegalStateException("Seed user alice is missing")
 
             val events = listOf(
                 Event(clubId = clubs[0].id, owner = alice, name = "Beginner's Chess Workshop", date = LocalDate.now().plusDays(7), location = "Room A101", type = Event.EventType.WORKSHOP, description = "Introduction to chess basics"),
