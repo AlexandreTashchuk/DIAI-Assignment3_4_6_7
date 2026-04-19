@@ -50,10 +50,12 @@ class NovaeventsController(val service: NovaeventsService, val eventRepository: 
     ): String {
 
         val events = service.filterEvents(type, clubId, from, to)
-        val clubs = events.mapNotNull { it.club }.distinctBy { it.id }
+        val clubs = service.listAllClubs()
+        val clubMap = clubs.associateBy { it.id }
 
         model.addAttribute("events", events)
         model.addAttribute("clubs", clubs)
+        model.addAttribute("clubMap", clubMap)
         model.addAttribute("types", Event.EventType.values())
         //model.addAttribute("types", Event.EventType.entries.toTypedArray())
 
